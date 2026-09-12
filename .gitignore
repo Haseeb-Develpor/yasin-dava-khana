@@ -1,0 +1,26 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# deps / build
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# prisma / generated
+**/*.db
+**/*.db-journal
+web/src/generated/
+
+# local dumps (already in web/public)
+*.jfif
+*.zip
+*.pdf
+
+# misc
+.DS_Store
+*.pem
+.vercel

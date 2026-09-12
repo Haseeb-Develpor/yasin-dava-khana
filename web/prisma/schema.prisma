@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String   @default("ایڈمن")
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id                String @id @default("main")
+  clinicNameUrdu    String @default("یٰسین دواخانہ دنیا پور")
+  clinicNameEn      String @default("Yasin Dava Khana Dunyapur")
+  tagline           String @default("قانونِ مفرد اعضاء کا مرکز · طبِ صابر")
+  phone1            String @default("0301-4185965")
+  phone2            String @default("0344-7014392")
+  whatsapp1         String @default("923014185965")
+  whatsapp2         String @default("923447014392")
+  address           String @default("دنیا پور")
+  hours             String @default("روزانہ صبح نو بجے سے شام آٹھ بجے تک")
+  aboutText         String @default("")
+  mapUrl            String @default("")
+  logoUrl           String @default("/logo.jpg")
+  heroIntro         String @default("طبِ صابر · دنیا پور")
+  footerDisclaimer  String @default("یہ ویب سائٹ روایتی یونانی حکمت کی معلومات کے لیے ہے۔ یہ ہسپتال کی تشخیص کا متبادل نہیں۔ ہنگامی حالت میں قریبی ہسپتال جائیں۔ کوئی بھی دوا صرف حکیم کی ہدایت کے مطابق استعمال کریں۔")
+  navHome           String @default("صفحہ اول")
+  navAbout          String @default("تعارف")
+  navMedicines      String @default("ادویات")
+  navBooks          String @default("کتب")
+  navBlog           String @default("بلاگ")
+  navGallery        String @default("تصاویر")
+  navContact        String @default("رابطہ")
+  eldersHeading     String @default("ہمارے بزرگ")
+  eldersText        String @default("وہ بزرگ حکماء جن کے علم اور نسبت سے یہ دواخانہ قائم ہے۔")
+  offersHeading     String @default("نئی آفرز")
+  medicinesHeading  String @default("ہربل ادویات")
+  booksHeading      String @default("کتب")
+  blogHeading       String @default("بلاگ اور طبی مشورے")
+  galleryHeading    String @default("تصاویر")
+  whatsappLabel     String @default("واٹس ایپ")
+  callLabel         String @default("فون")
+  footerPagesTitle  String @default("صفحات")
+  footerContactTitle String @default("رابطہ")
+}
+
+model Elder {
+  id        String  @id @default(cuid())
+  name      String
+  title     String  @default("")
+  photoUrl  String  @default("")
+  sortOrder Int     @default(0)
+  published Boolean @default(true)
+}
+
+model Offer {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String  @default("")
+  active      Boolean @default(true)
+  sortOrder   Int     @default(0)
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  products Product[]
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  nameEn      String    @default("")
+  slug        String    @unique
+  description String    @default("")
+  benefits    String    @default("")
+  usage       String    @default("")
+  takenWith   String    @default("")
+  form        String    @default("ٹیبلٹ")
+  quantity    String    @default("45 ٹیبلٹ")
+  price       Int       @default(0)
+  imageUrl    String    @default("")
+  forWhom     String    @default("both")
+  unaniNote   String    @default("")
+  featured    Boolean   @default(false)
+  published   Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
+}
+
+model Book {
+  id          String  @id @default(cuid())
+  title       String
+  slug        String  @unique
+  description String  @default("")
+  price       Int     @default(0)
+  imageUrl    String  @default("")
+  featured    Boolean @default(false)
+  published   Boolean @default(true)
+  sortOrder   Int     @default(0)
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  excerpt   String   @default("")
+  content   String   @default("")
+  imageUrl  String   @default("")
+  category  String   @default("طبی مشورہ")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteImage {
+  id        String @id @default(cuid())
+  slot      String @unique
+  group     String
+  label     String
+  imageUrl  String
+  sortOrder Int    @default(0)
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  caption   String   @default("")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
