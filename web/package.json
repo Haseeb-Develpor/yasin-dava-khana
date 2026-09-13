@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && prisma db push --accept-data-loss && tsx prisma/seed.ts && next build",
-    "start": "next start -H 0.0.0.0 -p ${PORT:-3000}",
+    "start": "node server.js",
     "lint": "eslint",
     "db:setup": "prisma generate && prisma db push && tsx --env-file=.env prisma/seed.ts",
     "db:seed": "tsx --env-file=.env prisma/seed.ts"
@@ -24,7 +24,9 @@
     "next": "16.3.2",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "prisma": "^7.9.1",
+    "tsx": "^4.23.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -34,9 +36,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
-    "prisma": "^7.9.1",
     "tailwindcss": "^4",
-    "tsx": "^4.23.12",
     "typescript": "^5"
   }
 }
